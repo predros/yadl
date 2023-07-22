@@ -84,16 +84,18 @@ void FormDialog::on_button_file_clicked() {
 
     if (m_is_wad) {
         QFileDialog dialog(this);
-        dialog.setOption(QFileDialog::DontUseNativeDialog);
 
         path = dialog.getOpenFileName(this, tr("Select IWAD"), QDir::currentPath(),
                                       tr("Doom IWAD Files (*.wad)"));
     } else {
         QFileDialog dialog(this);
-        dialog.setOptions(QFileDialog::DontUseNativeDialog);
-        dialog.setDirectory("/usr/bin");
+#ifdef _WIN32
+        path = dialog.getOpenFileName(this, tr("Select executable"), QDir::currentPath(),
+                                      tr("Executable files (*.exe)"));
 
+#else
         path = dialog.getOpenFileName(this, tr("Select executable"), QDir::currentPath());
+#endif
     }
 
     ui->entry_path->setText(path);
