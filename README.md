@@ -36,7 +36,7 @@ $ make
 Alternatively, one may use [Qt Creator](https://www.qt.io/product/development-tools) to open the project (by opening ```yadl.pro```) and build it directly from there.
 
 ## License
-This is free software: you can modify and/or redistribute it under the terms of the Lesser GNU Public License version 3. More information can be found in [LICENSE](https://github.com/predros/yadl/LICENSE), or on [GNU's website](https://www.gnu.org/licenses/lgpl-3.0.en.html).
+This is free software: you can modify and/or redistribute it under the terms of the Lesser GNU Public License version 3. More information can be found in [LICENSE](https://github.com/predros/yadl/blob/main/LICENSE), or on [GNU's website](https://www.gnu.org/licenses/lgpl-3.0.en.html).
 
 ## Links and additional info
 * [Github repository](https://github.com/predros/yadl)
