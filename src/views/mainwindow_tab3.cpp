@@ -65,5 +65,5 @@ void MainWindow::on_tab3_bt_down_clicked() {
 
     if (current_index < 1 || current_index >= m_preset_model.rowCount()) return;
 
-    m_preset_model.move_up(current_index);
+    m_preset_model.move_down(current_index);
 }
