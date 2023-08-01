@@ -17,7 +17,7 @@ void MainWindow::on_tab2_bt_portadd_clicked() {
 
         try {
             m_sourceport_model.add(results[0], results[1], results[2]);
-            save_to_JSON();
+            save_configs();
         } catch (PortNotFoundException& e) {
             error.setText("Unable to open source port!");
             error.exec();
@@ -49,7 +49,7 @@ void MainWindow::on_tab2_bt_portedit_clicked() {
 
         try {
             m_sourceport_model.edit(current_index, results[0], results[1], results[2]);
-            save_to_JSON();
+            save_configs();
         } catch (PortNotFoundException&) {
             error.setText("Unable to open source port!");
             error.exec();
@@ -75,7 +75,10 @@ void MainWindow::on_tab2_bt_portdel_clicked() {
 
     int result = warning.exec();
 
-    if (result == QMessageBox::Ok) m_sourceport_model.remove(current_index);
+    if (result == QMessageBox::Ok) {
+        m_sourceport_model.remove(current_index);
+        save_configs();
+    }
 }
 
 void MainWindow::on_tab2_bt_portup_clicked() {
@@ -84,6 +87,7 @@ void MainWindow::on_tab2_bt_portup_clicked() {
     if (current_index < 1 || current_index >= m_sourceport_model.rowCount()) return;
 
     m_sourceport_model.move_up(current_index);
+    save_configs();
 }
 
 void MainWindow::on_tab2_bt_portdown_clicked() {
@@ -92,6 +96,7 @@ void MainWindow::on_tab2_bt_portdown_clicked() {
     if (current_index < 0 || current_index >= m_sourceport_model.rowCount() - 1) return;
 
     m_sourceport_model.move_down(current_index);
+    save_configs();
 }
 
 void MainWindow::on_tab2_bt_iwadadd_clicked() {
@@ -108,7 +113,7 @@ void MainWindow::on_tab2_bt_iwadadd_clicked() {
 
         try {
             m_iwad_model.add(results[0], results[1], results[2]);
-            save_to_JSON();
+            save_configs();
         } catch (WADNotFoundException&) {
             error.setText("Unable to open WAD!");
             error.exec();
@@ -138,7 +143,7 @@ void MainWindow::on_tab2_bt_iwadedit_clicked() {
 
         try {
             m_iwad_model.edit(current_index, results[0], results[1], results[2]);
-            save_to_JSON();
+            save_configs();
         } catch (WADNotFoundException& w) {
             error.setText("Unable to open WAD!");
             error.exec();
@@ -161,7 +166,10 @@ void MainWindow::on_tab2_bt_iwaddel_clicked() {
 
     int result = warning.exec();
 
-    if (result == QMessageBox::Ok) m_iwad_model.remove(current_index);
+    if (result == QMessageBox::Ok) {
+        m_iwad_model.remove(current_index);
+        save_configs();
+    }
 }
 
 void MainWindow::on_tab2_bt_iwadup_clicked() {
@@ -170,6 +178,7 @@ void MainWindow::on_tab2_bt_iwadup_clicked() {
     if (current_index < 1 || current_index >= m_iwad_model.rowCount()) return;
 
     m_iwad_model.move_up(current_index);
+    save_configs();
 }
 
 void MainWindow::on_tab2_bt_iwaddown_clicked() {
@@ -178,4 +187,5 @@ void MainWindow::on_tab2_bt_iwaddown_clicked() {
     if (current_index < 0 || current_index >= m_iwad_model.rowCount() - 1) return;
 
     m_iwad_model.move_down(current_index);
+    save_configs();
 }

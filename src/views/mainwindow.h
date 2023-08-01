@@ -22,9 +22,13 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void save_to_JSON();
+    void save_configs();
 
-    void load_from_JSON();
+    void save_presets();
+
+    void load_configs();
+
+    void load_presets();
 
 protected:
     Ui::MainWindow *ui;

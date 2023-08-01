@@ -183,5 +183,6 @@ void MainWindow::on_tab1_bt_preset_clicked() {
 
         m_preset_model.add_or_edit(preset_name, port_id, iwad_id, skill_index, complevel_index,
                                    fast, coop, params, mods);
+        save_presets();
     }
 }

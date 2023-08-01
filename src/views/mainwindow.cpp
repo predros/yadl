@@ -24,7 +24,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tab1_cb_iwad->setModel(&m_iwad_model);
     ui->tab1_cb_map->setModel(&m_map_model);
 
-    load_from_JSON();
+    load_configs();
+    load_presets();
 
     m_map_model.populate(ui->tab1_cb_iwad->currentIndex());
 }
@@ -33,7 +34,7 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::save_to_JSON() {
+void MainWindow::save_configs() {
     QFile save_file(QStringLiteral(".yadlconfig"));
 
     if (!save_file.open(QIODevice::WriteOnly)) {
@@ -69,13 +70,25 @@ void MainWindow::save_to_JSON() {
     QJsonObject json;
     json["sourceports"] = m_sourceport_model.to_json_array();
     json["iwads"] = m_iwad_model.to_json_array();
-    json["presets"] = m_preset_model.to_json_array();
     json["current"] = current;
 
     save_file.write(QJsonDocument(json).toJson());
 }
 
-void MainWindow::load_from_JSON() {
+void MainWindow::save_presets() {
+    QFile save_file(QStringLiteral(".yadlpresets"));
+
+    if (!save_file.open(QIODevice::WriteOnly)) {
+        qWarning("Couldn't open presets file.");
+        return;
+    }
+
+    QJsonObject json;
+    json["presets"] = m_preset_model.to_json_array();
+    save_file.write(QJsonDocument(json).toJson());
+}
+
+void MainWindow::load_configs() {
     QFile open_file(QStringLiteral(".yadlconfig"));
 
     if (!open_file.open(QIODevice::ReadOnly)) {
@@ -89,16 +102,12 @@ void MainWindow::load_from_JSON() {
     QJsonValue sourceports = json["sourceports"];
     QJsonValue iwads = json["iwads"];
     QJsonValue current = json["current"];
-    QJsonValue presets = json["presets"];
 
     if (sourceports.isArray())
         m_sourceport_model.populate(sourceports.toArray());
 
     if (iwads.isArray())
         m_iwad_model.populate(iwads.toArray());
-
-    if (presets.isArray())
-        m_preset_model.populate(presets.toArray());
 
     if (current.isObject()) {
         int port_id = current["port"].toString().toInt();
@@ -130,8 +139,25 @@ void MainWindow::load_from_JSON() {
     }
 }
 
+void MainWindow::load_presets() {
+    QFile open_file(QStringLiteral(".yadlpresets"));
+
+    if (!open_file.open(QIODevice::ReadOnly)) {
+        qWarning("Couldn't open configuration file.");
+        return;
+    }
+
+    QByteArray data = open_file.readAll();
+    QJsonDocument json(QJsonDocument::fromJson(data));
+
+    QJsonValue presets = json["presets"];
+
+    if (presets.isArray())
+        m_preset_model.populate(presets.toArray());
+}
+
 void MainWindow::closeEvent(QCloseEvent *e) {
-    save_to_JSON();
+    save_configs();
     QMainWindow::closeEvent(e);
 }
 

@@ -48,7 +48,10 @@ void MainWindow::on_tab3_bt_remove_clicked() {
 
     int result = warning.exec();
 
-    if (result == QMessageBox::Ok) m_preset_model.remove(current_index);
+    if (result == QMessageBox::Ok) {
+        m_preset_model.remove(current_index);
+        save_presets();
+    }
 
 }
 
@@ -58,6 +61,7 @@ void MainWindow::on_tab3_bt_up_clicked() {
     if (current_index < 1 || current_index >= m_preset_model.rowCount()) return;
 
     m_preset_model.move_up(current_index);
+    save_presets();
 }
 
 void MainWindow::on_tab3_bt_down_clicked() {
@@ -66,4 +70,5 @@ void MainWindow::on_tab3_bt_down_clicked() {
     if (current_index < 1 || current_index >= m_preset_model.rowCount()) return;
 
     m_preset_model.move_down(current_index);
+    save_presets();
 }
