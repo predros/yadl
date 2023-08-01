@@ -22,9 +22,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void save_configs();
+    void save_configs() const;
 
-    void save_presets();
+    void save_presets() const;
 
     void load_configs();
 

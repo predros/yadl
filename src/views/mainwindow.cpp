@@ -34,7 +34,7 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::save_configs() {
+void MainWindow::save_configs() const {
     QFile save_file(QStringLiteral(".yadlconfig"));
 
     if (!save_file.open(QIODevice::WriteOnly)) {
@@ -75,7 +75,7 @@ void MainWindow::save_configs() {
     save_file.write(QJsonDocument(json).toJson());
 }
 
-void MainWindow::save_presets() {
+void MainWindow::save_presets() const {
     QFile save_file(QStringLiteral(".yadlpresets"));
 
     if (!save_file.open(QIODevice::WriteOnly)) {
