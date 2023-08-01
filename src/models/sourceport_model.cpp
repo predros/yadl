@@ -52,7 +52,7 @@ QVariant SourcePortModel::headerData(int section, Qt::Orientation orientation,
     return QVariant();
 }
 
-QVariant SourcePortModel::get_at(int row, int column) {
+QVariant SourcePortModel::get_at(int row, int column) const {
     if (row < 0 || row > rowCount() - 1) return QVariant();
 
     switch (column) {

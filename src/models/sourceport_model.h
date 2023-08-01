@@ -14,7 +14,7 @@ public:
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation,
                         int role = Qt::DisplayRole) const override;
-    QVariant get_at(int row, int column);
+    QVariant get_at(int row, int column) const;
     int index_from_id(int id) const;
     QVariant get_at_id(int id, int column) const;
 
