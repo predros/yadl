@@ -86,7 +86,7 @@ void FormDialog::on_button_file_clicked() {
         QFileDialog dialog(this);
 
         path = dialog.getOpenFileName(this, tr("Select IWAD"), QDir::currentPath(),
-                                      tr("Doom IWAD Files (*.wad)"));
+                                      tr("Doom IWAD Files (*.wad *.WAD)"));
     } else {
         QFileDialog dialog(this);
 #ifdef _WIN32
