@@ -82,7 +82,7 @@ void FormDialog::done(int r) {
 void FormDialog::on_button_file_clicked() {
     QString path;
     QFileInfo current_path(ui->entry_path->text());
-    QString starting_path = current_path.exists() ? current_path.absoluteFilePath() : QDir::currentPath();
+    QString starting_path = current_path.exists() ? current_path.absoluteDir().absolutePath() : QDir::currentPath();
     if (m_is_wad) {
         QFileDialog dialog(this);
 
