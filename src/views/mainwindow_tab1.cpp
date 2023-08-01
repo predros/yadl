@@ -8,7 +8,7 @@
 
 void MainWindow::on_tab1_bt_add_clicked() {
     QList<QString> files = QFileDialog::getOpenFileNames(this, "Open mod files",
-                           QDir::currentPath(), "Doom mod files (*.wad *.WAD *.pk3 *.PK3)");
+                           QDir::currentPath(), "Doom mod files (*.wad *.WAD *.pk3 *.PK3 *.zip *.ZIP)");
 
     for (auto& file : files) {
         m_modfile_model.add(file);
