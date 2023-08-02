@@ -15,7 +15,10 @@ void MainWindow::on_tab1_bt_add_clicked() {
     }
 
     auto last_index = m_modfile_model.index(m_modfile_model.rowCount() - 1, 0);
+
     ui->tab1_list_files->setCurrentIndex(last_index);
+
+    m_map_model.populate(ui->tab1_cb_iwad->currentIndex());
 }
 
 void MainWindow::on_tab1_bt_remove_clicked() {
@@ -26,6 +29,8 @@ void MainWindow::on_tab1_bt_remove_clicked() {
     m_modfile_model.remove(current_index);
 
     ui->tab1_list_files->setCurrentIndex(m_modfile_model.index(current_index - 1, 0));
+
+    m_map_model.populate(ui->tab1_cb_iwad->currentIndex());
 }
 
 void MainWindow::on_tab1_bt_up_clicked() {
@@ -36,6 +41,8 @@ void MainWindow::on_tab1_bt_up_clicked() {
     m_modfile_model.move_up(current_index);
 
     ui->tab1_list_files->setCurrentIndex(m_modfile_model.index(current_index - 1, 0));
+
+    m_map_model.populate(ui->tab1_cb_iwad->currentIndex());
 }
 
 void MainWindow::on_tab1_bt_down_clicked() {
@@ -46,6 +53,8 @@ void MainWindow::on_tab1_bt_down_clicked() {
     m_modfile_model.move_down(current_index);
 
     ui->tab1_list_files->setCurrentIndex(m_modfile_model.index(current_index + 1, 0));
+
+    m_map_model.populate(ui->tab1_cb_iwad->currentIndex());
 }
 
 void MainWindow::on_tab1_cb_iwad_currentIndexChanged(int) {
