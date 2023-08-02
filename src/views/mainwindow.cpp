@@ -35,7 +35,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::save_configs() const {
-    QFile save_file(QStringLiteral(".yadlconfig"));
+    QFile save_file(QStringLiteral("yadlconfig"));
 
     if (!save_file.open(QIODevice::WriteOnly)) {
         qWarning("Couldn't open configuration file.");
@@ -76,7 +76,7 @@ void MainWindow::save_configs() const {
 }
 
 void MainWindow::save_presets() const {
-    QFile save_file(QStringLiteral(".yadlpresets"));
+    QFile save_file(QStringLiteral("yadlpresets"));
 
     if (!save_file.open(QIODevice::WriteOnly)) {
         qWarning("Couldn't open presets file.");
@@ -89,7 +89,7 @@ void MainWindow::save_presets() const {
 }
 
 void MainWindow::load_configs() {
-    QFile open_file(QStringLiteral(".yadlconfig"));
+    QFile open_file(QStringLiteral("yadlconfig"));
 
     if (!open_file.open(QIODevice::ReadOnly)) {
         qWarning("Couldn't open configuration file.");
@@ -140,7 +140,7 @@ void MainWindow::load_configs() {
 }
 
 void MainWindow::load_presets() {
-    QFile open_file(QStringLiteral(".yadlpresets"));
+    QFile open_file(QStringLiteral("yadlpresets"));
 
     if (!open_file.open(QIODevice::ReadOnly)) {
         qWarning("Couldn't open configuration file.");
