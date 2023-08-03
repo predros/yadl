@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "../exceptions.h"
 #include <QFileDialog>
 #include <QDir>
 #include <QMessageBox>
@@ -95,7 +96,7 @@ void MainWindow::on_tab1_bt_launch_clicked() {
     QString iwad_path = m_iwad_model.get_at(iwad_index, 1).toString();
     QString iwad_params = m_iwad_model.get_at(iwad_index, 2).toString();
 
-    QString map_name = m_map_model.get_at(map_index).toString();
+    QString map_name = map_index > 0 ? m_map_model.get_at(map_index).toString() : "";
 
     int skill = ui->tab1_cb_skill->currentIndex();
     int complevel = complevels_list[complevel_index];
@@ -104,38 +105,11 @@ void MainWindow::on_tab1_bt_launch_clicked() {
     bool coop_monsters = ui->tab1_ch_coop->isChecked();
 
     QString params = ui->tab1_entry_params->text();
+    QString total_params = params + port_params + iwad_params;
 
-    QFileInfo file_checker(port_path);
+    QList<QString> mods;
 
-    if (!file_checker.exists()) {
-        error.setText("Source port could not be found!");
-        error.exec();
-        return;
-    }
-
-    file_checker = QFileInfo(iwad_path);
-
-    if (!file_checker.exists()) {
-        error.setText("Source port could not be found!");
-        error.exec();
-        return;
-    }
-
-    QRegularExpression doom("E[0-9]M[0-9]");
-    QRegularExpression doom2("MAP[0-9]{2}");
-
-    QString warp = "";
-
-    if (map_index > 0) {
-        if (doom.match(map_name).hasMatch())
-            warp = QString(" -warp ") + map_name[1] + QString(" ") + map_name[3];
-        else if (doom2.match(map_name).hasMatch())
-            warp = QString(" -warp ") + map_name[3] + map_name[4];
-        else
-            warp = " +map " + map_name;
-    }
-
-    QString mods_string = "";
+    static QFileInfo file_checker;
 
     for (int i = 0; i < m_modfile_model.rowCount(); i++) {
         QString mod_path = m_modfile_model.get_at(i, 1).toString();
@@ -147,25 +121,20 @@ void MainWindow::on_tab1_bt_launch_clicked() {
             return;
         }
 
-        mods_string += " " + mod_path;
+        mods.append(mod_path);
     }
 
-    QString command = port_path + " -iwad " + iwad_path + " " + warp;
 
-    if (skill > 0 && map_index > 0) command += " -skill " + QString::number(skill);
-
-    if (complevel > 0) command += " -complevel " + QString::number(complevel);
-
-    if (fast_monsters) command += " -fast ";
-
-    if (coop_monsters) command += " -net-solo ";
-
-    command += " " + port_params + " " + iwad_params + " " + params;
-
-    if (m_modfile_model.rowCount() > 0)
-        command += " -file" + mods_string;
-
-    system(command.toStdString().c_str());
+    try {
+        launch(port_path, iwad_path, skill, complevel, map_name, mods, total_params,
+               fast_monsters, coop_monsters);
+    } catch (PortNotFoundException&) {
+        error.setText("Could not find the selected source port!");
+        error.exec();
+    } catch (WADNotFoundException&) {
+        error.setText("Could not find the selected IWAD!");
+        error.exec();
+    }
 }
 
 void MainWindow::on_tab1_bt_preset_clicked() {

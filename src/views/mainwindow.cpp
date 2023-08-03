@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "../exceptions.h"
 #include <QFile>
 #include <QJsonDocument>
 
@@ -155,6 +156,61 @@ void MainWindow::load_presets() {
     if (presets.isArray())
         m_preset_model.populate(presets.toArray());
 }
+
+void MainWindow::launch(QString port_path, QString iwad_path, int skill, int complevel,
+                        QString map, QList<QString> mods, QString params, bool fast, bool coop) const {
+
+    static QFileInfo file_checker(port_path);
+
+    if (!file_checker.exists()) {
+        throw PortNotFoundException();
+        return;
+    }
+
+    file_checker = QFileInfo(iwad_path);
+
+    if (!file_checker.exists()) {
+        throw WADNotFoundException();
+        return;
+    }
+
+    QString command = port_path + " -iwad " + iwad_path;
+
+    if (!map.trimmed().isEmpty()) {
+        if (skill > 0 && skill < 6) command += " -skill " + QString::number(skill);
+
+        static QRegularExpression doom("E[0-9]M[0-9]");
+        static QRegularExpression doom2("MAP[0-9]{2}");
+
+        if (doom.match(map).hasMatch())
+            command += QString(" -warp ") + map[1] + QString(" ") + map[3];
+        else if (doom2.match(map).hasMatch())
+            command += QString(" -warp ") + map[3] + map[4];
+        else
+            command += " -warp " + map;
+    }
+
+    if (complevel > 0 && complevel < 22)
+        command += " -complevel " + QString::number(complevel);
+
+    command += " " + params;
+
+    if (fast) command += " -fast";
+
+    if (coop) command += " -net-solo";
+
+    QString mods_string = "";
+
+    for (int i = 0; i < mods.size(); i++) {
+        file_checker = QFileInfo(mods[i]);
+        mods_string += " " + mods[i];
+    }
+
+    command += mods_string.isEmpty() ? "" : " -file " + mods_string;
+
+    system(command.toStdString().c_str());
+}
+
 
 void MainWindow::closeEvent(QCloseEvent *e) {
     save_configs();

@@ -30,6 +30,9 @@ public:
 
     void load_presets();
 
+    void launch(QString port_path, QString iwad_path, int skill, int complevel, QString map,
+                QList<QString> mods, QString params = "", bool fast = false, bool coop = false) const;
+
 protected:
     Ui::MainWindow *ui;
 
