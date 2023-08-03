@@ -3,6 +3,7 @@
 #include "../exceptions.h"
 #include <QFile>
 #include <QJsonDocument>
+#include <QProcess>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -161,11 +162,33 @@ void MainWindow::launch(QString port_path, QString iwad_path, int skill, int com
                         QString map, QList<QString> mods, QString params, bool fast, bool coop) const {
 
     static QFileInfo file_checker(port_path);
+    static QProcess run_process;
+    QString port_command = port_path;
+    QStringList args_list;
 
     if (!file_checker.exists()) {
         throw PortNotFoundException();
         return;
     }
+
+#ifdef __unix__
+
+    if (file_checker.suffix() == "exe") {
+        args_list.append("wine");
+        run_process.start("which", args_list);
+        run_process.waitForFinished();
+        QString output(run_process.readAllStandardOutput());
+        args_list.clear();
+
+        if (output.trimmed().isEmpty()) {
+            throw PortNotExecutableException();
+        } else {
+            port_command = "wine";
+            args_list.append(port_path);
+        }
+    }
+
+#endif
 
     file_checker = QFileInfo(iwad_path);
 
@@ -174,41 +197,52 @@ void MainWindow::launch(QString port_path, QString iwad_path, int skill, int com
         return;
     }
 
-    QString command = port_path + " -iwad " + iwad_path;
+    args_list.append("-iwad");
+    args_list.append(iwad_path);
 
     if (!map.trimmed().isEmpty()) {
-        if (skill > 0 && skill < 6) command += " -skill " + QString::number(skill);
+        if (skill > 0 && skill < 6) {
+            args_list.append("-skill");
+            args_list.append(QString::number(skill));
+        }
 
         static QRegularExpression doom("E[0-9]M[0-9]");
         static QRegularExpression doom2("MAP[0-9]{2}");
 
+        args_list.append("-warp");
+
         if (doom.match(map).hasMatch())
-            command += QString(" -warp ") + map[1] + QString(" ") + map[3];
+            args_list.append(map[1] + QString(" ") + map[3]);
         else if (doom2.match(map).hasMatch())
-            command += QString(" -warp ") + map[3] + map[4];
+            args_list.append(QString(map[3]) + QString(map[4]));
         else
-            command += " -warp " + map;
+            args_list.append(map);
     }
 
-    if (complevel > 0 && complevel < 22)
-        command += " -complevel " + QString::number(complevel);
-
-    command += " " + params;
-
-    if (fast) command += " -fast";
-
-    if (coop) command += " -net-solo";
-
-    QString mods_string = "";
-
-    for (int i = 0; i < mods.size(); i++) {
-        file_checker = QFileInfo(mods[i]);
-        mods_string += " " + mods[i];
+    if (complevel > 0 && complevel < 22) {
+        args_list.append("-complevel");
+        args_list.append(QString::number(complevel));
     }
 
-    command += mods_string.isEmpty() ? "" : " -file " + mods_string;
+    QStringList custom_params = params.split(" ");
 
-    system(command.toStdString().c_str());
+    for (auto& p : custom_params)
+        args_list.append(p);
+
+    if (fast) args_list.append("-fast");
+
+    if (coop) args_list.append("-net-solo");
+
+    if (mods.size() > 0) {
+        args_list.append("-file");
+
+        for (int i = 0; i < mods.size(); i++) {
+            file_checker = QFileInfo(mods[i]);
+            args_list.append(mods[i]);
+        }
+    }
+
+    run_process.start(port_command, args_list);
 }
 
 

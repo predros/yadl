@@ -131,6 +131,13 @@ void MainWindow::on_tab1_bt_launch_clicked() {
     } catch (PortNotFoundException&) {
         error.setText("Could not find the selected source port!");
         error.exec();
+    } catch (PortNotExecutableException&) {
+#ifdef __unix__
+        error.setText("Source port file is not executable, or Wine could not be found!");
+#else
+        error.setText("Source port file is not executable!");
+#endif
+        error.exec();
     } catch (WADNotFoundException&) {
         error.setText("Could not find the selected IWAD!");
         error.exec();

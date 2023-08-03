@@ -7,7 +7,8 @@ SourcePort::SourcePort(int id, const QString& name, const QString& path,
 
     if (!m_file.exists()) throw PortNotFoundException();
 
-    if (!m_file.isExecutable()) throw PortNotExecutableException();
+    if (!m_file.isExecutable()
+            && m_file.suffix() != "exe") throw PortNotExecutableException();
 }
 
 SourcePort::SourcePort(const QJsonObject& json) {
