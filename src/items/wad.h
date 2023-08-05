@@ -4,6 +4,7 @@
 #include <QFileInfo>
 #include <QString>
 #include <QList>
+#include <QDataStream>
 
 /**
  * Mostly based off https://www.cyotek.com/blog/reading-doom-wad-files,
@@ -25,9 +26,9 @@ protected:
     WAD(const QString& name, const QString& path);
 
     // Reads the WAD header info.
-    void read_wad_header(std::ifstream& input);
+    QFile& read_wad_header(QFile& input);
     // Reads the WAD directory list to find the map names.
-    void find_map_names(std::ifstream& input);
+    QFile& find_map_names(QFile& input);
 
     QString m_name;
     // Path to the WAD file
