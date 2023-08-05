@@ -215,14 +215,16 @@ void MainWindow::launch(QString port_path, QString iwad_path, int skill, int com
         static QRegularExpression doom("E[0-9]M[0-9]");
         static QRegularExpression doom2("MAP[0-9]{2}");
 
-        args_list.append("-warp");
-
-        if (doom.match(map).hasMatch())
+        if (doom.match(map).hasMatch()) {
+            args_list.append("-warp");
             args_list.append(map[1] + QString(" ") + map[3]);
-        else if (doom2.match(map).hasMatch())
+        } else if (doom2.match(map).hasMatch()) {
+            args_list.append("-warp");
             args_list.append(QString(map[3]) + QString(map[4]));
-        else
+        } else {
+            args_list.append("+map");
             args_list.append(map);
+        }
     }
 
     if (complevel > 0 && complevel < 22) {
