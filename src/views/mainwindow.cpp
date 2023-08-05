@@ -163,37 +163,43 @@ void MainWindow::launch(QString port_path, QString iwad_path, int skill, int com
 
     static QFileInfo file_checker(port_path);
     static QProcess run_process;
-    QString port_command = port_path;
     QStringList args_list;
 
     if (!file_checker.exists()) {
-        throw PortNotFoundException();
+        throw QString("Source port could not be located!");
         return;
     }
 
+    QString port_command = port_path;
+
+    if (!file_checker.isExecutable()) {
 #ifdef __unix__
 
-    if (file_checker.suffix() == "exe") {
-        args_list.append("wine");
-        run_process.start("which", args_list);
-        run_process.waitForFinished();
-        QString output(run_process.readAllStandardOutput());
-        args_list.clear();
+        if (file_checker.suffix() == "exe") {
+            args_list.append("wine");
+            run_process.start("which", args_list);
+            run_process.waitForFinished();
+            QString output(run_process.readAllStandardOutput());
+            args_list.clear();
 
-        if (output.trimmed().isEmpty()) {
-            throw PortNotExecutableException();
-        } else {
-            port_command = "wine";
-            args_list.append(port_path);
+            if (output.trimmed().isEmpty()) {
+                throw QString("Source port is a Windows executable, but Wine could not be found!");
+            } else {
+                port_command = "wine";
+                args_list.append(port_path);
+            }
         }
-    }
 
+#else
+        throw QString("Source port must be an executable!");
+        return;
 #endif
+    }
 
     file_checker = QFileInfo(iwad_path);
 
     if (!file_checker.exists()) {
-        throw WADNotFoundException();
+        throw QString("Could not locate IWAD " + file_checker.fileName() + "!");
         return;
     }
 
@@ -233,6 +239,11 @@ void MainWindow::launch(QString port_path, QString iwad_path, int skill, int com
 
         for (int i = 0; i < mods.size(); i++) {
             file_checker = QFileInfo(mods[i]);
+
+            if (!file_checker.exists()) {
+                throw QString("Could not locate " + file_checker.fileName() + "!");
+            }
+
             args_list.append(mods[i]);
         }
     }
@@ -246,6 +257,11 @@ void MainWindow::launch(QString port_path, QString iwad_path, int skill, int com
 
     run_process.start(port_command, args_list);
     run_process.waitForFinished();
+
+    QString error(run_process.readAllStandardError());
+
+    if (!error.trimmed().isEmpty())
+        throw error.remove('\n');
 }
 
 

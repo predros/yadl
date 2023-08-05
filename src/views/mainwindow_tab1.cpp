@@ -114,32 +114,14 @@ void MainWindow::on_tab1_bt_launch_clicked() {
     for (int i = 0; i < m_modfile_model.rowCount(); i++) {
         QString mod_path = m_modfile_model.get_at(i, 1).toString();
         file_checker = QFileInfo(mod_path);
-
-        if (!file_checker.exists()) {
-            error.setText("Could not find " + file_checker.fileName() + "!");
-            error.exec();
-            return;
-        }
-
         mods.append(mod_path);
     }
-
 
     try {
         launch(port_path, iwad_path, skill, complevel, map_name, mods, total_params,
                fast_monsters, coop_monsters);
-    } catch (PortNotFoundException&) {
-        error.setText("Could not find the selected source port!");
-        error.exec();
-    } catch (PortNotExecutableException&) {
-#ifdef __unix__
-        error.setText("Source port file is not executable, or Wine could not be found!");
-#else
-        error.setText("Source port file is not executable!");
-#endif
-        error.exec();
-    } catch (WADNotFoundException&) {
-        error.setText("Could not find the selected IWAD!");
+    } catch (QString& e) {
+        error.setText(e);
         error.exec();
     }
 }
