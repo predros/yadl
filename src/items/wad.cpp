@@ -1,8 +1,6 @@
 #include "wad.h"
 #include "../exceptions.h"
 #include <QRegularExpression>
-#include <algorithm>
-#include <regex>
 
 WAD::WAD(const QString& name, const QString& path) : m_name(name) {
     m_file = QFileInfo(path);
