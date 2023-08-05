@@ -29,6 +29,7 @@ void MainWindow::on_tab3_bt_load_clicked() {
     ui->tab1_entry_params->setText(params);
 
     m_modfile_model.populate(mods);
+    m_map_model.populate(iwad_index);
 
     ui->tabWidget->setCurrentIndex(0);
 }
