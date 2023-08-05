@@ -224,11 +224,6 @@ void MainWindow::launch(QString port_path, QString iwad_path, int skill, int com
         args_list.append(QString::number(complevel));
     }
 
-    QStringList custom_params = params.split(" ");
-
-    for (auto& p : custom_params)
-        args_list.append(p);
-
     if (fast) args_list.append("-fast");
 
     if (coop) args_list.append("-net-solo");
@@ -242,7 +237,15 @@ void MainWindow::launch(QString port_path, QString iwad_path, int skill, int com
         }
     }
 
+    QStringList custom_params = params.split(" ");
+
+    if (custom_params.size() > 0 && custom_params[0] != "") {
+        for (auto& p : custom_params)
+            args_list.append(p);
+    }
+
     run_process.start(port_command, args_list);
+    run_process.waitForFinished();
 }
 
 
