@@ -1,6 +1,7 @@
 #include "wad.h"
 #include "../exceptions.h"
 #include <QRegularExpression>
+#include <QCryptographicHash>
 
 WAD::WAD(const QString& name, const QString& path) : m_name(name) {
     m_file = QFileInfo(path);
@@ -14,6 +15,8 @@ WAD::WAD(const QString& name, const QString& path) : m_name(name) {
         read_wad_header(file);
         find_map_names(file);
     }
+
+    set_md5(file);
 }
 
 QString WAD::name() const {
@@ -22,6 +25,10 @@ QString WAD::name() const {
 
 QString WAD::file_path() const {
     return m_file.absoluteFilePath();
+}
+
+QString WAD::get_md5() const {
+    return m_md5_hash;
 }
 
 void WAD::set_name(const QString& new_name) {
@@ -39,6 +46,16 @@ void WAD::set_file_path(const QString& path) {
         read_wad_header(input);
         find_map_names(input);
     }
+
+    set_md5(input);
+}
+
+void WAD::set_md5(QFile& file) {
+    file.seek(0);
+    QCryptographicHash hash(QCryptographicHash::Md5);
+    hash.addData(&file);
+
+    m_md5_hash = QString(hash.result().toHex());
 }
 
 const QList<QString>& WAD::maps() const {
