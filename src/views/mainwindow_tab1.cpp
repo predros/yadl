@@ -91,6 +91,8 @@ void MainWindow::on_tab1_bt_launch_clicked() {
     }
 
     QString port_path = m_sourceport_model.get_at(port_index, 1).toString();
+    SourcePortType port_type = static_cast<SourcePortType>(m_sourceport_model.get_at(
+                                   port_index, 4).toString().toInt());
     QString port_params = m_sourceport_model.get_at(port_index, 2).toString();
 
     QString iwad_path = m_iwad_model.get_at(iwad_index, 1).toString();
@@ -118,7 +120,7 @@ void MainWindow::on_tab1_bt_launch_clicked() {
     }
 
     try {
-        launch(port_path, iwad_path, skill, complevel, map_name, mods, total_params,
+        launch(port_path, port_type, iwad_path, skill, complevel, map_name, mods, total_params,
                fast_monsters, coop_monsters);
     } catch (QString& e) {
         error.setText(e);
