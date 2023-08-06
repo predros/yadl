@@ -158,7 +158,8 @@ void MainWindow::load_presets() {
         m_preset_model.populate(presets.toArray());
 }
 
-void MainWindow::launch(QString port_path, QString iwad_path, int skill, int complevel,
+void MainWindow::launch(QString port_path, SourcePortType port_type, QString iwad_path,
+                        int skill, int complevel,
                         QString map, QList<QString> mods, QString params, bool fast, bool coop) const {
 
     static QFileInfo file_checker(port_path);
@@ -206,27 +207,6 @@ void MainWindow::launch(QString port_path, QString iwad_path, int skill, int com
     args_list.append("-iwad");
     args_list.append(iwad_path);
 
-    if (!map.trimmed().isEmpty()) {
-        if (skill > 0 && skill < 6) {
-            args_list.append("-skill");
-            args_list.append(QString::number(skill));
-        }
-
-        static QRegularExpression doom("E[0-9]M[0-9]");
-        static QRegularExpression doom2("MAP[0-9]{2}");
-
-        if (doom.match(map).hasMatch()) {
-            args_list.append("-warp");
-            args_list.append(map[1] + QString(" ") + map[3]);
-        } else if (doom2.match(map).hasMatch()) {
-            args_list.append("-warp");
-            args_list.append(QString(map[3]) + QString(map[4]));
-        } else {
-            args_list.append("+map");
-            args_list.append(map);
-        }
-    }
-
     if (complevel > 0 && complevel < 22) {
         args_list.append("-complevel");
         args_list.append(QString::number(complevel));
@@ -247,6 +227,36 @@ void MainWindow::launch(QString port_path, QString iwad_path, int skill, int com
             }
 
             args_list.append(mods[i]);
+        }
+    }
+
+    if (!map.trimmed().isEmpty()) {
+        if (skill > 0 && skill < 6) {
+            args_list.append("-skill");
+            args_list.append(QString::number(skill));
+        }
+
+        if (port_type == SOURCEPORT_ZDOOM) {
+            args_list.append("+map");
+            args_list.append(map);
+        } else {
+            static QRegularExpression doom("E[0-9]M[0-9]");
+            static QRegularExpression doom2("MAP[0-9]{2}");
+            static QRegularExpression level("LEVEL[0-9]{2}");
+
+            if (doom.match(map).hasMatch()) {
+                args_list.append("-warp");
+                args_list.append(map[1] + QString(" ") + map[3]);
+            } else if (doom2.match(map).hasMatch()) {
+                args_list.append("-warp");
+                args_list.append(QString(map[3]) + QString(map[4]));
+            } else if (level.match(map).hasMatch()) {
+                args_list.append("-warp");
+                args_list.append(QString(map[5]) + QString(map[6]));
+            } else {
+                args_list.append("+map");
+                args_list.append(map);
+            }
         }
     }
 
