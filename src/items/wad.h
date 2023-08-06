@@ -15,7 +15,6 @@ class WAD {
 public:
     QString name() const;
     QString file_path() const;
-    QString get_md5() const;
 
     void set_name(const QString& name);
     void set_file_path(const QString& path);
@@ -31,7 +30,7 @@ protected:
     // Reads the WAD directory list to find the map names.
     QFile& find_map_names(QFile& input);
 
-    void set_md5(QFile& input);
+    QString get_md5(QFile& input) const;
 
     QString m_name;
     // Path to the WAD file
@@ -43,9 +42,6 @@ protected:
     int m_directory_start;
     // Map names contained in the wad
     QList<QString> map_names;
-
-    // MD5 hash of the WAD
-    QString m_md5_hash;
 };
 
 #endif // WAD_H

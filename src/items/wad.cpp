@@ -15,8 +15,6 @@ WAD::WAD(const QString& name, const QString& path) : m_name(name) {
         read_wad_header(file);
         find_map_names(file);
     }
-
-    set_md5(file);
 }
 
 QString WAD::name() const {
@@ -25,10 +23,6 @@ QString WAD::name() const {
 
 QString WAD::file_path() const {
     return m_file.absoluteFilePath();
-}
-
-QString WAD::get_md5() const {
-    return m_md5_hash;
 }
 
 void WAD::set_name(const QString& new_name) {
@@ -46,16 +40,14 @@ void WAD::set_file_path(const QString& path) {
         read_wad_header(input);
         find_map_names(input);
     }
-
-    set_md5(input);
 }
 
-void WAD::set_md5(QFile& file) {
+QString WAD::get_md5(QFile& file) const {
     file.seek(0);
     QCryptographicHash hash(QCryptographicHash::Md5);
     hash.addData(&file);
 
-    m_md5_hash = QString(hash.result().toHex());
+    return QString(hash.result().toHex());
 }
 
 const QList<QString>& WAD::maps() const {
@@ -85,6 +77,10 @@ QFile& WAD::find_map_names(QFile& input) {
     // map name formats
     static QRegularExpression doom1("E[0-9]M[0-9]");
     static QRegularExpression doom2("MAP[0-9][0-9]");
+
+    // MD5 hash for NERVE.WAD (No Rest for the Living, BFG edition)
+    static QString nerve_md5 = "967d5ae23daf45196212ae1b605da3b0";
+    bool is_nerve = get_md5(input) == nerve_md5;
 
     // Iterate through every lump in the directory list
     for (int i = 0; i < m_lump_count - 1; i++) {
@@ -122,10 +118,12 @@ QFile& WAD::find_map_names(QFile& input) {
             QByteArray name_array = buffer.sliced(8, name_length);
             name = QString(name_array);
 
+
             // If the resulting name matches either regex (and thus is a map
             // name), add it to the map list.
             if (doom1.match(name).hasMatch() || doom2.match(name).hasMatch()) {
-                map_names.append(name);
+                if (is_nerve) map_names.append("LEVEL" + QString(name[3]) + QString(name[4]));
+                else map_names.append(name);
             }
         }
     }
