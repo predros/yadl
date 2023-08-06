@@ -68,6 +68,9 @@ QVariant SourcePortModel::get_at(int row, int column) const {
         case 3:
             return m_data[row].id();
 
+        case 4:
+            return m_data[row].sourceport_type();
+
     }
 
     return QVariant();
