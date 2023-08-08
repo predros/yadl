@@ -1,14 +1,18 @@
-#ifndef IWADMODEL_H
-#define IWADMODEL_H
+#ifndef PRESETCONTROLLER_H
+#define PRESETCONTROLLER_H
 
-#include "../items/iwad.h"
+#include "../models/preset.h"
 #include <QAbstractTableModel>
-#include <QJsonArray>
 
-class IWADModel : public QAbstractTableModel {
+class SourcePortController;
+class IWADController;
+
+class PresetController : public QAbstractTableModel {
     Q_OBJECT
 public:
-    explicit IWADModel(QObject *parent = nullptr);
+    explicit PresetController(SourcePortController& port_controller,
+                              IWADController& iwad_controller,
+                              QObject *parent = nullptr);
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     int columnCount(const QModelIndex& parent = QModelIndex()) const override;
@@ -16,17 +20,12 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation,
                         int role = Qt::DisplayRole) const override;
     QVariant get_at(int row, int column) const;
-    QVariant get_at_id(int id, int column) const;
-
-    QList<QString> get_maps(int index) const;
     int index_from_id(int id) const;
 
     void populate(const QJsonArray& array);
 
-    void add(const QString& name, const QString& path,
-             const QString& params);
-    void edit(int index, const QString& name, const QString& path,
-              const QString& params);
+    void add_or_edit(const QString& name, int port_id, int iwad_id, int skill, int complevel,
+                     bool fast, bool coop, const QString& params, const QList<QString>& mods);
     void remove(int index);
     void move_up(int index);
     void move_down(int index);
@@ -34,9 +33,12 @@ public:
     QJsonArray to_json_array() const;
 
 protected:
-    QList<IWAD> m_data;
+    QList<Preset> m_data;
+    SourcePortController& m_sourceport_controller;
+    IWADController& m_iwad_controller;
+
     int next_id() const;
 
 };
 
-#endif // IWADMODEL_H
+#endif // PRESETCONTROLLER_H

@@ -9,17 +9,17 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    src/items/iwad.cpp \
-    src/items/modfile.cpp \
-    src/items/preset.cpp \
-    src/items/sourceport.cpp \
-    src/items/wad.cpp \
+    src/models/iwad.cpp \
+    src/models/modfile.cpp \
+    src/models/preset.cpp \
+    src/models/sourceport.cpp \
+    src/models/wad.cpp \
     src/main.cpp \
-    src/models/iwad_model.cpp \
-    src/models/map_model.cpp \
-    src/models/modfile_model.cpp \
-    src/models/preset_model.cpp \
-    src/models/sourceport_model.cpp \
+    src/controllers/iwad_controller.cpp \
+    src/controllers/map_controller.cpp \
+    src/controllers/modfile_controller.cpp \
+    src/controllers/preset_controller.cpp \
+    src/controllers/sourceport_controller.cpp \
     src/views/mainwindow.cpp \
     src/views/mainwindow_tab1.cpp \
     src/views/mainwindow_tab2.cpp \
@@ -28,16 +28,16 @@ SOURCES += \
 
 HEADERS += \
     src/exceptions.h \
-    src/items/iwad.h \
-    src/items/modfile.h \
-    src/items/preset.h \
-    src/items/sourceport.h \
-    src/items/wad.h \
-    src/models/iwad_model.h \
-    src/models/map_model.h \
-    src/models/modfile_model.h \
-    src/models/preset_model.h \
-    src/models/sourceport_model.h \
+    src/models/iwad.h \
+    src/models/modfile.h \
+    src/models/preset.h \
+    src/models/sourceport.h \
+    src/models/wad.h \
+    src/controllers/iwad_controller.h \
+    src/controllers/map_controller.h \
+    src/controllers/modfile_controller.h \
+    src/controllers/preset_controller.h \
+    src/controllers/sourceport_controller.h \
     src/views/mainwindow.h \
     src/views/formdialog.h \
 

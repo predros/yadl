@@ -1,18 +1,18 @@
-#include "iwad_model.h"
+#include "iwad_controller.h"
 
-IWADModel::IWADModel(QObject *parent)
+IWADController::IWADController(QObject *parent)
     : QAbstractTableModel{parent} {
 }
 
-int IWADModel::rowCount(const QModelIndex&) const {
+int IWADController::rowCount(const QModelIndex&) const {
     return m_data.size();
 }
 
-int IWADModel::columnCount(const QModelIndex&) const {
+int IWADController::columnCount(const QModelIndex&) const {
     return 3;
 }
 
-QVariant IWADModel::data(const QModelIndex& index, int role) const {
+QVariant IWADController::data(const QModelIndex& index, int role) const {
     if (index.isValid() && role == Qt::DisplayRole) {
         switch (index.column()) {
             case 0:
@@ -32,7 +32,7 @@ QVariant IWADModel::data(const QModelIndex& index, int role) const {
     return QVariant();
 }
 
-QVariant IWADModel::headerData(int section, Qt::Orientation orientation,
+QVariant IWADController::headerData(int section, Qt::Orientation orientation,
                                int role) const {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section) {
@@ -50,7 +50,7 @@ QVariant IWADModel::headerData(int section, Qt::Orientation orientation,
     return QVariant();
 }
 
-QVariant IWADModel::get_at(int row, int column) const {
+QVariant IWADController::get_at(int row, int column) const {
     if (row < 0 || row > rowCount() - 1) return QVariant();
 
     switch (column) {
@@ -70,7 +70,7 @@ QVariant IWADModel::get_at(int row, int column) const {
     return QVariant();
 }
 
-QVariant IWADModel::get_at_id(int id, int column) const {
+QVariant IWADController::get_at_id(int id, int column) const {
     IWAD const *result = nullptr;
 
     for (auto& iwad : m_data)
@@ -95,13 +95,13 @@ QVariant IWADModel::get_at_id(int id, int column) const {
     return QVariant();
 }
 
-QList<QString> IWADModel::get_maps(int index) const {
+QList<QString> IWADController::get_maps(int index) const {
     if (index < 0 || index > rowCount() - 1) return QList<QString>();
 
     return m_data[index].maps();
 }
 
-int IWADModel::index_from_id(int id) const {
+int IWADController::index_from_id(int id) const {
     for (int i = 0; i < m_data.size(); i++) {
         if (m_data[i].id() == id) return i;
     }
@@ -109,7 +109,7 @@ int IWADModel::index_from_id(int id) const {
     return -1;
 }
 
-int IWADModel::next_id() const {
+int IWADController::next_id() const {
     if (m_data.size() == 0) return 0;
 
     int result = 0;
@@ -121,7 +121,7 @@ int IWADModel::next_id() const {
     return result + 1;
 }
 
-void IWADModel::populate(const QJsonArray& array) {
+void IWADController::populate(const QJsonArray& array) {
     beginResetModel();
     m_data.clear();
 
@@ -136,7 +136,7 @@ void IWADModel::populate(const QJsonArray& array) {
     endResetModel();
 }
 
-void IWADModel::add(const QString& name, const QString& path,
+void IWADController::add(const QString& name, const QString& path,
                     const QString& params) {
     beginResetModel();
     int id = next_id();
@@ -145,7 +145,7 @@ void IWADModel::add(const QString& name, const QString& path,
     endResetModel();
 }
 
-void IWADModel::edit(int index, const QString& name, const QString& path,
+void IWADController::edit(int index, const QString& name, const QString& path,
                      const QString& params) {
     if (index < 0 || index > m_data.size() - 1) return;
 
@@ -156,7 +156,7 @@ void IWADModel::edit(int index, const QString& name, const QString& path,
     endResetModel();
 }
 
-void IWADModel::remove(int index) {
+void IWADController::remove(int index) {
     if (index < 0 || index > m_data.size() - 1) return;
 
     beginResetModel();
@@ -164,7 +164,7 @@ void IWADModel::remove(int index) {
     endResetModel();
 }
 
-void IWADModel::move_up(int index) {
+void IWADController::move_up(int index) {
     if (index < 1 || index > m_data.size() - 1) return;
 
     beginResetModel();
@@ -172,7 +172,7 @@ void IWADModel::move_up(int index) {
     endResetModel();
 }
 
-void IWADModel::move_down(int index) {
+void IWADController::move_down(int index) {
     if (index < 0 || index > m_data.size() - 2) return;
 
     beginResetModel();
@@ -180,7 +180,7 @@ void IWADModel::move_down(int index) {
     endResetModel();
 }
 
-QJsonArray IWADModel::to_json_array() const {
+QJsonArray IWADController::to_json_array() const {
     QJsonArray array;
 
     for (auto& iwad : m_data)

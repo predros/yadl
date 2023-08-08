@@ -1,13 +1,13 @@
-#ifndef MODFILEMODEL_H
-#define MODFILEMODEL_H
+#ifndef MODFILECONTROLLER_H
+#define MODFILECONTROLLER_H
 
-#include "../items/modfile.h"
+#include "../models/modfile.h"
 #include <QAbstractListModel>
 
-class ModFileModel : public QAbstractListModel {
+class ModFileController : public QAbstractListModel {
     Q_OBJECT
 public:
-    explicit ModFileModel(QObject *parent = nullptr);
+    explicit ModFileController(QObject *parent = nullptr);
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     int columnCount(const QModelIndex& parent = QModelIndex()) const override;
@@ -28,4 +28,4 @@ protected:
 
 };
 
-#endif // MODFILEMODEL_H
+#endif // MODFILECONTROLLER_H

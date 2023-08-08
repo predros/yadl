@@ -16,7 +16,7 @@ void MainWindow::on_tab2_bt_portadd_clicked() {
         auto results = form.get_data();
 
         try {
-            m_sourceport_model.add(results[0], results[1], results[2]);
+            m_sourceport_controller.add(results[0], results[1], results[2]);
             save_configs();
         } catch (PortNotFoundException& e) {
             error.setText("Unable to open source port!");
@@ -33,9 +33,9 @@ void MainWindow::on_tab2_bt_portedit_clicked() {
 
     if (current_index == -1) return;
 
-    QString name = m_sourceport_model.get_at(current_index, 0).toString();
-    QString path = m_sourceport_model.get_at(current_index, 1).toString();
-    QString params = m_sourceport_model.get_at(current_index, 2).toString();
+    QString name = m_sourceport_controller.get_at(current_index, 0).toString();
+    QString path = m_sourceport_controller.get_at(current_index, 1).toString();
+    QString params = m_sourceport_controller.get_at(current_index, 2).toString();
 
     FormDialog form("Edit source port", "Port name", false, name, path, params);
     int result = form.exec();
@@ -48,7 +48,7 @@ void MainWindow::on_tab2_bt_portedit_clicked() {
         error.setStandardButtons(QMessageBox::Ok);
 
         try {
-            m_sourceport_model.edit(current_index, results[0], results[1], results[2]);
+            m_sourceport_controller.edit(current_index, results[0], results[1], results[2]);
             save_configs();
         } catch (PortNotFoundException&) {
             error.setText("Unable to open source port!");
@@ -63,9 +63,9 @@ void MainWindow::on_tab2_bt_portedit_clicked() {
 void MainWindow::on_tab2_bt_portdel_clicked() {
     int current_index = ui->tab2_table_ports->currentIndex().row();
 
-    if (current_index < 0 || current_index >= m_sourceport_model.rowCount()) return;
+    if (current_index < 0 || current_index >= m_sourceport_controller.rowCount()) return;
 
-    QString port_name = m_sourceport_model.get_at(current_index, 0).toString();
+    QString port_name = m_sourceport_controller.get_at(current_index, 0).toString();
 
     QMessageBox warning;
     warning.setText("Are you sure you want to remove " + port_name +
@@ -76,7 +76,7 @@ void MainWindow::on_tab2_bt_portdel_clicked() {
     int result = warning.exec();
 
     if (result == QMessageBox::Ok) {
-        m_sourceport_model.remove(current_index);
+        m_sourceport_controller.remove(current_index);
         save_configs();
     }
 }
@@ -84,18 +84,18 @@ void MainWindow::on_tab2_bt_portdel_clicked() {
 void MainWindow::on_tab2_bt_portup_clicked() {
     int current_index = ui->tab2_table_ports->currentIndex().row();
 
-    if (current_index < 1 || current_index >= m_sourceport_model.rowCount()) return;
+    if (current_index < 1 || current_index >= m_sourceport_controller.rowCount()) return;
 
-    m_sourceport_model.move_up(current_index);
+    m_sourceport_controller.move_up(current_index);
     save_configs();
 }
 
 void MainWindow::on_tab2_bt_portdown_clicked() {
     int current_index = ui->tab2_table_ports->currentIndex().row();
 
-    if (current_index < 0 || current_index >= m_sourceport_model.rowCount() - 1) return;
+    if (current_index < 0 || current_index >= m_sourceport_controller.rowCount() - 1) return;
 
-    m_sourceport_model.move_down(current_index);
+    m_sourceport_controller.move_down(current_index);
     save_configs();
 }
 
@@ -112,7 +112,7 @@ void MainWindow::on_tab2_bt_iwadadd_clicked() {
         error.setStandardButtons(QMessageBox::Ok);
 
         try {
-            m_iwad_model.add(results[0], results[1], results[2]);
+            m_iwad_controller.add(results[0], results[1], results[2]);
             save_configs();
         } catch (WADNotFoundException&) {
             error.setText("Unable to open WAD!");
@@ -126,9 +126,9 @@ void MainWindow::on_tab2_bt_iwadedit_clicked() {
 
     if (current_index == -1) return;
 
-    QString name = m_iwad_model.get_at(current_index, 0).toString();
-    QString path = m_iwad_model.get_at(current_index, 1).toString();
-    QString params = m_iwad_model.get_at(current_index, 2).toString();
+    QString name = m_iwad_controller.get_at(current_index, 0).toString();
+    QString path = m_iwad_controller.get_at(current_index, 1).toString();
+    QString params = m_iwad_controller.get_at(current_index, 2).toString();
 
     FormDialog form("Edit IWAD", "IWAD name", true, name, path, params);
 
@@ -142,7 +142,7 @@ void MainWindow::on_tab2_bt_iwadedit_clicked() {
         error.setStandardButtons(QMessageBox::Ok);
 
         try {
-            m_iwad_model.edit(current_index, results[0], results[1], results[2]);
+            m_iwad_controller.edit(current_index, results[0], results[1], results[2]);
             save_configs();
         } catch (WADNotFoundException& w) {
             error.setText("Unable to open WAD!");
@@ -154,9 +154,9 @@ void MainWindow::on_tab2_bt_iwadedit_clicked() {
 void MainWindow::on_tab2_bt_iwaddel_clicked() {
     int current_index = ui->tab2_table_iwads->currentIndex().row();
 
-    if (current_index < 0 || current_index >= m_iwad_model.rowCount()) return;
+    if (current_index < 0 || current_index >= m_iwad_controller.rowCount()) return;
 
-    QString iwad_name = m_iwad_model.get_at(current_index, 0).toString();
+    QString iwad_name = m_iwad_controller.get_at(current_index, 0).toString();
 
     QMessageBox warning;
     warning.setText("Are you sure you want to remove " + iwad_name +
@@ -167,7 +167,7 @@ void MainWindow::on_tab2_bt_iwaddel_clicked() {
     int result = warning.exec();
 
     if (result == QMessageBox::Ok) {
-        m_iwad_model.remove(current_index);
+        m_iwad_controller.remove(current_index);
         save_configs();
     }
 }
@@ -175,17 +175,17 @@ void MainWindow::on_tab2_bt_iwaddel_clicked() {
 void MainWindow::on_tab2_bt_iwadup_clicked() {
     int current_index = ui->tab2_table_iwads->currentIndex().row();
 
-    if (current_index < 1 || current_index >= m_iwad_model.rowCount()) return;
+    if (current_index < 1 || current_index >= m_iwad_controller.rowCount()) return;
 
-    m_iwad_model.move_up(current_index);
+    m_iwad_controller.move_up(current_index);
     save_configs();
 }
 
 void MainWindow::on_tab2_bt_iwaddown_clicked() {
     int current_index = ui->tab2_table_iwads->currentIndex().row();
 
-    if (current_index < 0 || current_index >= m_iwad_model.rowCount() - 1) return;
+    if (current_index < 0 || current_index >= m_iwad_controller.rowCount() - 1) return;
 
-    m_iwad_model.move_down(current_index);
+    m_iwad_controller.move_down(current_index);
     save_configs();
 }

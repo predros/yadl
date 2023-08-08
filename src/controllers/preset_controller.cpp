@@ -1,21 +1,22 @@
-#include "preset_model.h"
-#include "sourceport_model.h"
-#include "iwad_model.h"
+#include "preset_controller.h"
+#include "sourceport_controller.h"
+#include "iwad_controller.h"
 #include <QJsonArray>
 
-PresetModel::PresetModel(SourcePortModel& sp, IWADModel& iwad, QObject *parent)
-    : QAbstractTableModel{parent}, m_sourceport_model(sp), m_iwad_model(iwad) {
+PresetController::PresetController(SourcePortController& sp, IWADController& iwad,
+                                   QObject *parent)
+    : QAbstractTableModel{parent}, m_sourceport_controller(sp), m_iwad_controller(iwad) {
 }
 
-int PresetModel::rowCount(const QModelIndex&) const {
+int PresetController::rowCount(const QModelIndex&) const {
     return m_data.size();
 }
 
-int PresetModel::columnCount(const QModelIndex&) const {
+int PresetController::columnCount(const QModelIndex&) const {
     return 3;
 }
 
-QVariant PresetModel::data(const QModelIndex& index, int role) const {
+QVariant PresetController::data(const QModelIndex& index, int role) const {
 
     if (index.isValid() && role == Qt::DisplayRole) {
         int id;
@@ -26,19 +27,19 @@ QVariant PresetModel::data(const QModelIndex& index, int role) const {
 
             case 1:
                 id = m_data[index.row()].sourceport_id();
-                return m_sourceport_model.get_at_id(id, 0);
+                return m_sourceport_controller.get_at_id(id, 0);
 
             case 2:
                 id = m_data[index.row()].iwad_id();
-                return m_iwad_model.get_at_id(id, 0);
+                return m_iwad_controller.get_at_id(id, 0);
         }
     }
 
     return QVariant();
 }
 
-QVariant PresetModel::headerData(int section, Qt::Orientation orientation,
-                                 int role) const {
+QVariant PresetController::headerData(int section, Qt::Orientation orientation,
+                                      int role) const {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section) {
             case 0:
@@ -55,7 +56,7 @@ QVariant PresetModel::headerData(int section, Qt::Orientation orientation,
     return QVariant();
 }
 
-QVariant PresetModel::get_at(int row, int column) const {
+QVariant PresetController::get_at(int row, int column) const {
     if (row < 0 || row > rowCount() - 1) return QVariant();
 
     int id;
@@ -66,11 +67,11 @@ QVariant PresetModel::get_at(int row, int column) const {
 
         case 1:
             id = m_data[row].sourceport_id();
-            return m_sourceport_model.get_at_id(id, 0);
+            return m_sourceport_controller.get_at_id(id, 0);
 
         case 2:
             id = m_data[row].iwad_id();
-            return m_iwad_model.get_at_id(id, 0);
+            return m_iwad_controller.get_at_id(id, 0);
 
         case 3:
             return m_data[row].sourceport_id();
@@ -100,7 +101,7 @@ QVariant PresetModel::get_at(int row, int column) const {
     return QVariant();
 }
 
-int PresetModel::index_from_id(int id) const {
+int PresetController::index_from_id(int id) const {
     for (int i = 0; i < m_data.size(); i++) {
         if (m_data[i].id() == id) return i;
     }
@@ -108,7 +109,7 @@ int PresetModel::index_from_id(int id) const {
     return -1;
 }
 
-int PresetModel::next_id() const {
+int PresetController::next_id() const {
     int result = 0;
 
     for (auto& iwad : m_data)
@@ -117,7 +118,7 @@ int PresetModel::next_id() const {
     return result + 1;
 }
 
-void PresetModel::populate(const QJsonArray& array) {
+void PresetController::populate(const QJsonArray& array) {
     beginResetModel();
     m_data.clear();
 
@@ -132,9 +133,10 @@ void PresetModel::populate(const QJsonArray& array) {
     endResetModel();
 }
 
-void PresetModel::add_or_edit(const QString& name, int port_id, int iwad_id, int skill,
-                              int complevel, bool fast, bool coop, const QString& params,
-                              const QList<QString>& mods) {
+void PresetController::add_or_edit(const QString& name, int port_id, int iwad_id,
+                                   int skill,
+                                   int complevel, bool fast, bool coop, const QString& params,
+                                   const QList<QString>& mods) {
     Preset *exists = nullptr;
 
     for (auto& preset : m_data)
@@ -161,7 +163,7 @@ void PresetModel::add_or_edit(const QString& name, int port_id, int iwad_id, int
     endResetModel();
 }
 
-void PresetModel::remove(int index) {
+void PresetController::remove(int index) {
     if (index < 0 || index > m_data.size() - 1) return;
 
     beginResetModel();
@@ -169,7 +171,7 @@ void PresetModel::remove(int index) {
     endResetModel();
 }
 
-void PresetModel::move_up(int index) {
+void PresetController::move_up(int index) {
     if (index < 1 || index > m_data.size() - 1) return;
 
     beginResetModel();
@@ -177,7 +179,7 @@ void PresetModel::move_up(int index) {
     endResetModel();
 }
 
-void PresetModel::move_down(int index) {
+void PresetController::move_down(int index) {
     if (index < 0 || index > m_data.size() - 2) return;
 
     beginResetModel();
@@ -185,7 +187,7 @@ void PresetModel::move_down(int index) {
     endResetModel();
 }
 
-QJsonArray PresetModel::to_json_array() const {
+QJsonArray PresetController::to_json_array() const {
     QJsonArray array;
 
     for (auto& preset : m_data)

@@ -1,20 +1,20 @@
-#include "sourceport_model.h"
+#include "sourceport_controller.h"
 #include <QFont>
 
-SourcePortModel::SourcePortModel(QObject *parent)
+SourcePortController::SourcePortController(QObject *parent)
     : QAbstractTableModel{parent} {
 
 }
 
-int SourcePortModel::rowCount(const QModelIndex&) const {
+int SourcePortController::rowCount(const QModelIndex&) const {
     return m_data.size();
 }
 
-int SourcePortModel::columnCount(const QModelIndex&) const {
+int SourcePortController::columnCount(const QModelIndex&) const {
     return 3;
 }
 
-QVariant SourcePortModel::data(const QModelIndex& index, int role) const {
+QVariant SourcePortController::data(const QModelIndex& index, int role) const {
     if (index.isValid() && role == Qt::DisplayRole) {
         switch (index.column()) {
             case 0:
@@ -34,7 +34,7 @@ QVariant SourcePortModel::data(const QModelIndex& index, int role) const {
     return QVariant();
 }
 
-QVariant SourcePortModel::headerData(int section, Qt::Orientation orientation,
+QVariant SourcePortController::headerData(int section, Qt::Orientation orientation,
                                      int role) const {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section) {
@@ -52,7 +52,7 @@ QVariant SourcePortModel::headerData(int section, Qt::Orientation orientation,
     return QVariant();
 }
 
-QVariant SourcePortModel::get_at(int row, int column) const {
+QVariant SourcePortController::get_at(int row, int column) const {
     if (row < 0 || row > rowCount() - 1) return QVariant();
 
     switch (column) {
@@ -76,7 +76,7 @@ QVariant SourcePortModel::get_at(int row, int column) const {
     return QVariant();
 }
 
-QVariant SourcePortModel::get_at_id(int id, int column) const {
+QVariant SourcePortController::get_at_id(int id, int column) const {
     SourcePort const *result = nullptr;
 
     for (auto& port : m_data)
@@ -101,7 +101,7 @@ QVariant SourcePortModel::get_at_id(int id, int column) const {
     return QVariant();
 }
 
-int SourcePortModel::index_from_id(int id) const {
+int SourcePortController::index_from_id(int id) const {
     for (int i = 0; i < m_data.size(); i++) {
         if (m_data[i].id() == id) return i;
     }
@@ -109,7 +109,7 @@ int SourcePortModel::index_from_id(int id) const {
     return -1;
 }
 
-int SourcePortModel::next_id() const {
+int SourcePortController::next_id() const {
     int result = 0;
 
     for (auto& port : m_data)
@@ -118,7 +118,7 @@ int SourcePortModel::next_id() const {
     return result + 1;
 }
 
-void SourcePortModel::populate(const QJsonArray& array) {
+void SourcePortController::populate(const QJsonArray& array) {
     beginResetModel();
     m_data.clear();
 
@@ -133,7 +133,7 @@ void SourcePortModel::populate(const QJsonArray& array) {
     endResetModel();
 }
 
-void SourcePortModel::add(const QString& name, const QString& path,
+void SourcePortController::add(const QString& name, const QString& path,
                           const QString& params) {
     beginResetModel();
     int id = next_id();
@@ -142,7 +142,7 @@ void SourcePortModel::add(const QString& name, const QString& path,
     endResetModel();
 }
 
-void SourcePortModel::edit(int index, const QString& name, const QString& path,
+void SourcePortController::edit(int index, const QString& name, const QString& path,
                            const QString& params) {
     if (index < 0 || index > m_data.size() - 1) return;
 
@@ -153,7 +153,7 @@ void SourcePortModel::edit(int index, const QString& name, const QString& path,
     endResetModel();
 }
 
-void SourcePortModel::remove(int index) {
+void SourcePortController::remove(int index) {
     if (index < 0 || index > m_data.size() - 1) return;
 
     beginResetModel();
@@ -161,7 +161,7 @@ void SourcePortModel::remove(int index) {
     endResetModel();
 }
 
-void SourcePortModel::move_up(int index) {
+void SourcePortController::move_up(int index) {
     if (index < 1 || index > m_data.size() - 1) return;
 
     beginResetModel();
@@ -169,7 +169,7 @@ void SourcePortModel::move_up(int index) {
     endResetModel();
 }
 
-void SourcePortModel::move_down(int index) {
+void SourcePortController::move_down(int index) {
     if (index < 0 || index > m_data.size() - 2) return;
 
     beginResetModel();
@@ -177,7 +177,7 @@ void SourcePortModel::move_down(int index) {
     endResetModel();
 }
 
-QJsonArray SourcePortModel::to_json_array() const {
+QJsonArray SourcePortController::to_json_array() const {
     QJsonArray array;
 
     for (auto& sp : m_data)

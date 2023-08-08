@@ -3,11 +3,11 @@
 
 #include <QMainWindow>
 #include <QSortFilterProxyModel>
-#include "../models/sourceport_model.h"
-#include "../models/iwad_model.h"
-#include "../models/modfile_model.h"
-#include "../models/map_model.h"
-#include "../models/preset_model.h"
+#include "../controllers/sourceport_controller.h"
+#include "../controllers/iwad_controller.h"
+#include "../controllers/modfile_controller.h"
+#include "../controllers/map_controller.h"
+#include "../controllers/preset_controller.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -37,15 +37,15 @@ public:
 protected:
     Ui::MainWindow *ui;
 
-    SourcePortModel m_sourceport_model;
+    SourcePortController m_sourceport_controller;
 
-    IWADModel m_iwad_model;
+    IWADController m_iwad_controller;
 
-    ModFileModel m_modfile_model;
+    ModFileController m_modfile_controller;
 
-    MapModel m_map_model;
+    MapController m_map_controller;
 
-    PresetModel m_preset_model;
+    PresetController m_preset_controller;
 
     QSortFilterProxyModel m_preset_proxy;
 

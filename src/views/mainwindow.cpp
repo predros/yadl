@@ -7,29 +7,29 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
-    , m_map_model(m_iwad_model, m_modfile_model), m_preset_model(m_sourceport_model,
-            m_iwad_model) {
+    , m_map_controller(m_iwad_controller, m_modfile_controller), m_preset_controller(m_sourceport_controller,
+            m_iwad_controller) {
     ui->setupUi(this);
 
     ui->tab3_table_presets->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    m_preset_proxy.setSourceModel(&m_preset_model);
+    m_preset_proxy.setSourceModel(&m_preset_controller);
     ui->tab3_table_presets->setModel(&m_preset_proxy);
 
     ui->tab2_table_ports->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tab2_table_iwads->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
-    ui->tab2_table_ports->setModel(&m_sourceport_model);
-    ui->tab2_table_iwads->setModel(&m_iwad_model);
+    ui->tab2_table_ports->setModel(&m_sourceport_controller);
+    ui->tab2_table_iwads->setModel(&m_iwad_controller);
 
-    ui->tab1_list_files->setModel(&m_modfile_model);
-    ui->tab1_cb_port->setModel(&m_sourceport_model);
-    ui->tab1_cb_iwad->setModel(&m_iwad_model);
-    ui->tab1_cb_map->setModel(&m_map_model);
+    ui->tab1_list_files->setModel(&m_modfile_controller);
+    ui->tab1_cb_port->setModel(&m_sourceport_controller);
+    ui->tab1_cb_iwad->setModel(&m_iwad_controller);
+    ui->tab1_cb_map->setModel(&m_map_controller);
 
     load_configs();
     load_presets();
 
-    m_map_model.populate(ui->tab1_cb_iwad->currentIndex());
+    m_map_controller.populate(ui->tab1_cb_iwad->currentIndex());
 }
 
 MainWindow::~MainWindow() {
@@ -45,9 +45,9 @@ void MainWindow::save_configs() const {
     }
 
     QJsonObject current;
-    QString current_iwad = m_iwad_model.get_at(ui->tab1_cb_iwad->currentIndex(),
+    QString current_iwad = m_iwad_controller.get_at(ui->tab1_cb_iwad->currentIndex(),
                            3).toString();
-    QString current_port = m_sourceport_model.get_at(ui->tab1_cb_port->currentIndex(),
+    QString current_port = m_sourceport_controller.get_at(ui->tab1_cb_port->currentIndex(),
                            3).toString();
 
     current["iwad"] = current_iwad;
@@ -61,17 +61,17 @@ void MainWindow::save_configs() const {
 
     QJsonArray modfiles;
 
-    for (int i = 0; i < m_modfile_model.rowCount(); i++) {
+    for (int i = 0; i < m_modfile_controller.rowCount(); i++) {
         QJsonObject mod;
-        mod["path"] = m_modfile_model.get_at(i, 1).toString();
+        mod["path"] = m_modfile_controller.get_at(i, 1).toString();
         modfiles.append(mod);
     }
 
     current["mods"] = modfiles;
 
     QJsonObject json;
-    json["sourceports"] = m_sourceport_model.to_json_array();
-    json["iwads"] = m_iwad_model.to_json_array();
+    json["sourceports"] = m_sourceport_controller.to_json_array();
+    json["iwads"] = m_iwad_controller.to_json_array();
     json["current"] = current;
 
     save_file.write(QJsonDocument(json).toJson());
@@ -86,7 +86,7 @@ void MainWindow::save_presets() const {
     }
 
     QJsonObject json;
-    json["presets"] = m_preset_model.to_json_array();
+    json["presets"] = m_preset_controller.to_json_array();
     save_file.write(QJsonDocument(json).toJson());
 }
 
@@ -106,17 +106,17 @@ void MainWindow::load_configs() {
     QJsonValue current = json["current"];
 
     if (sourceports.isArray())
-        m_sourceport_model.populate(sourceports.toArray());
+        m_sourceport_controller.populate(sourceports.toArray());
 
     if (iwads.isArray())
-        m_iwad_model.populate(iwads.toArray());
+        m_iwad_controller.populate(iwads.toArray());
 
     if (current.isObject()) {
         int port_id = current["port"].toString().toInt();
         int iwad_id = current["iwad"].toString().toInt();
 
-        int port_index = m_sourceport_model.index_from_id(port_id);
-        int iwad_index = m_iwad_model.index_from_id(iwad_id);
+        int port_index = m_sourceport_controller.index_from_id(port_id);
+        int iwad_index = m_iwad_controller.index_from_id(iwad_id);
         int map_index = current["map"].toString().toInt();
         int skill_index = current["skill"].toString().toInt();
         int complevel_index = current["complevel"].toString().toInt();
@@ -135,7 +135,7 @@ void MainWindow::load_configs() {
         QJsonValue mods = current["mods"];
 
         if (mods.isArray())
-            m_modfile_model.populate(mods.toArray());
+            m_modfile_controller.populate(mods.toArray());
 
         ui->tab1_cb_map->setCurrentIndex(map_index);
     }
@@ -155,7 +155,7 @@ void MainWindow::load_presets() {
     QJsonValue presets = json["presets"];
 
     if (presets.isArray())
-        m_preset_model.populate(presets.toArray());
+        m_preset_controller.populate(presets.toArray());
 }
 
 void MainWindow::launch(QString port_path, SourcePortType port_type, QString iwad_path,

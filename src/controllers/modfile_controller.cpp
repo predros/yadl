@@ -1,21 +1,21 @@
-#include "modfile_model.h"
+#include "modfile_controller.h"
 #include <QJsonArray>
 #include <QJsonObject>
 
-ModFileModel::ModFileModel(QObject *parent)
+ModFileController::ModFileController(QObject *parent)
     : QAbstractListModel{parent} {
 
 }
 
-int ModFileModel::rowCount(const QModelIndex&) const {
+int ModFileController::rowCount(const QModelIndex&) const {
     return m_data.size();
 }
 
-int ModFileModel::columnCount(const QModelIndex&) const {
+int ModFileController::columnCount(const QModelIndex&) const {
     return 2;
 }
 
-QVariant ModFileModel::data(const QModelIndex& index, int role) const {
+QVariant ModFileController::data(const QModelIndex& index, int role) const {
     if (index.isValid() && role == Qt::DisplayRole) {
         switch (index.column()) {
             case 0:
@@ -29,7 +29,7 @@ QVariant ModFileModel::data(const QModelIndex& index, int role) const {
     return QVariant();
 }
 
-QVariant ModFileModel::get_at(int row, int column) const {
+QVariant ModFileController::get_at(int row, int column) const {
     if (row < 0 || row > rowCount() - 1) return QVariant();
 
     switch (column) {
@@ -43,13 +43,13 @@ QVariant ModFileModel::get_at(int row, int column) const {
     return QVariant();
 }
 
-QList<QString> ModFileModel::get_maps(int index) const {
+QList<QString> ModFileController::get_maps(int index) const {
     if (index < 0 || index > rowCount() - 1) return QList<QString>();
 
     return m_data[index].maps();
 }
 
-void ModFileModel::populate(const QList<QString>& mods) {
+void ModFileController::populate(const QList<QString>& mods) {
     beginResetModel();
 
     m_data.clear();
@@ -66,7 +66,7 @@ void ModFileModel::populate(const QList<QString>& mods) {
     endResetModel();
 }
 
-void ModFileModel::populate(const QJsonArray& mods) {
+void ModFileController::populate(const QJsonArray& mods) {
     beginResetModel();
 
     m_data.clear();
@@ -83,20 +83,20 @@ void ModFileModel::populate(const QJsonArray& mods) {
     endResetModel();
 }
 
-void ModFileModel::clear() {
+void ModFileController::clear() {
     beginResetModel();
     m_data.clear();
     endResetModel();
 }
 
-void ModFileModel::add(const QString& path) {
+void ModFileController::add(const QString& path) {
     beginResetModel();
     ModFile mod(path);
     m_data.append(mod);
     endResetModel();
 }
 
-void ModFileModel::remove(int index) {
+void ModFileController::remove(int index) {
     if (index < 0 || index > m_data.size() - 1) return;
 
     beginResetModel();
@@ -104,7 +104,7 @@ void ModFileModel::remove(int index) {
     endResetModel();
 }
 
-void ModFileModel::move_up(int index) {
+void ModFileController::move_up(int index) {
     if (index < 1 || index > m_data.size() - 1) return;
 
     beginResetModel();
@@ -112,7 +112,7 @@ void ModFileModel::move_up(int index) {
     endResetModel();
 }
 
-void ModFileModel::move_down(int index) {
+void ModFileController::move_down(int index) {
     if (index < 0 || index > m_data.size() - 2) return;
 
     beginResetModel();
