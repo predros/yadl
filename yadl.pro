@@ -21,10 +21,15 @@ SOURCES += \
     src/controllers/preset_controller.cpp \
     src/controllers/sourceport_controller.cpp \
     src/views/mainwindow.cpp \
+    src/views/mainwindow_io.cpp \
+    src/views/mainwindow_iwad.cpp \
+    src/views/mainwindow_launcher.cpp \
+    src/views/mainwindow_preset.cpp \
+    src/views/mainwindow_sourceport.cpp \
     src/views/mainwindow_tab1.cpp \
     src/views/mainwindow_tab2.cpp \
-    src/views/formdialog.cpp \
-    src/views/mainwindow_tab3.cpp
+    src/views/mainwindow_tab3.cpp \
+    src/views/formdialog.cpp
 
 HEADERS += \
     src/exceptions.h \
