@@ -3,11 +3,11 @@
 
 #include <QMainWindow>
 #include <QSortFilterProxyModel>
-#include "../controllers/sourceport_controller.h"
-#include "../controllers/iwad_controller.h"
-#include "../controllers/modfile_controller.h"
-#include "../controllers/map_controller.h"
-#include "../controllers/preset_controller.h"
+#include "controllers/sourceport_controller.h"
+#include "controllers/iwad_controller.h"
+#include "controllers/modfile_controller.h"
+#include "controllers/map_controller.h"
+#include "controllers/preset_controller.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

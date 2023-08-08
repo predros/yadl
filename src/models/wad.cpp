@@ -1,5 +1,5 @@
-#include "wad.h"
-#include "../exceptions.h"
+#include "models/wad.h"
+#include "exceptions.h"
 #include <QRegularExpression>
 #include <QCryptographicHash>
 

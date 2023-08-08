@@ -1,4 +1,4 @@
-#include "iwad.h"
+#include "models/iwad.h"
 
 IWAD::IWAD(int id, const QString& name, const QString& path,
            const QString& params) : WAD{name, path}, m_id(id), m_params(params) {

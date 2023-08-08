@@ -1,5 +1,5 @@
-#include "sourceport.h"
-#include "../exceptions.h"
+#include "models/sourceport.h"
+#include "exceptions.h"
 
 SourcePort::SourcePort(int id, const QString& name, const QString& path,
                        const QString& params) : m_id(id), m_name(name), m_params(params) {

@@ -8,43 +8,45 @@ CONFIG += c++17
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+INCLUDEPATH += include
+
 SOURCES += \
+    src/main.cpp \
     src/models/iwad.cpp \
     src/models/modfile.cpp \
     src/models/preset.cpp \
     src/models/sourceport.cpp \
     src/models/wad.cpp \
-    src/main.cpp \
     src/controllers/iwad_controller.cpp \
     src/controllers/map_controller.cpp \
     src/controllers/modfile_controller.cpp \
     src/controllers/preset_controller.cpp \
     src/controllers/sourceport_controller.cpp \
-    src/views/mainwindow.cpp \
-    src/views/mainwindow_io.cpp \
-    src/views/mainwindow_iwad.cpp \
-    src/views/mainwindow_launcher.cpp \
-    src/views/mainwindow_preset.cpp \
-    src/views/mainwindow_sourceport.cpp \
-    src/views/mainwindow_tab1.cpp \
-    src/views/mainwindow_tab2.cpp \
-    src/views/mainwindow_tab3.cpp \
-    src/views/formdialog.cpp
+    src/views/mainwindow/mainwindow.cpp \
+    src/views/mainwindow/methods_io.cpp \
+    src/views/mainwindow/methods_iwad.cpp \
+    src/views/mainwindow/methods_launcher.cpp \
+    src/views/mainwindow/methods_preset.cpp \
+    src/views/mainwindow/methods_sourceport.cpp \
+    src/views/mainwindow/slots_tab1.cpp \
+    src/views/mainwindow/slots_tab2.cpp \
+    src/views/mainwindow/slots_tab3.cpp \
+    src/views/formdialog/formdialog.cpp
 
 HEADERS += \
-    src/exceptions.h \
-    src/models/iwad.h \
-    src/models/modfile.h \
-    src/models/preset.h \
-    src/models/sourceport.h \
-    src/models/wad.h \
-    src/controllers/iwad_controller.h \
-    src/controllers/map_controller.h \
-    src/controllers/modfile_controller.h \
-    src/controllers/preset_controller.h \
-    src/controllers/sourceport_controller.h \
-    src/views/mainwindow.h \
-    src/views/formdialog.h \
+    include/exceptions.h \
+    include/models/iwad.h \
+    include/models/modfile.h \
+    include/models/preset.h \
+    include/models/sourceport.h \
+    include/models/wad.h \
+    include/controllers/iwad_controller.h \
+    include/controllers/map_controller.h \
+    include/controllers/modfile_controller.h \
+    include/controllers/preset_controller.h \
+    include/controllers/sourceport_controller.h \
+    include/views/mainwindow.h \
+    include/views/formdialog.h
 
 FORMS += \
     forms/formdialog.ui \

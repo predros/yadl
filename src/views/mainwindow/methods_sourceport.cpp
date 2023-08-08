@@ -1,6 +1,6 @@
-#include "mainwindow.h"
-#include "formdialog.h"
-#include "../exceptions.h"
+#include "views/mainwindow.h"
+#include "views/formdialog.h"
+#include "exceptions.h"
 #include <QMessageBox>
 
 void MainWindow::add_port() {
