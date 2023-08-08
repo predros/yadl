@@ -97,5 +97,6 @@ private slots:
     void on_tab3_bt_up_clicked();
     void on_tab3_bt_down_clicked();
     void on_tab3_entry_filter_textChanged(const QString& arg1);
+    void on_tab3_table_presets_doubleClicked(const QModelIndex& index);
 };
 #endif // MAINWINDOW_H

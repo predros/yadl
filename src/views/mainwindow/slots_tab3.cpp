@@ -26,3 +26,8 @@ void MainWindow::on_tab3_entry_filter_textChanged(const QString& new_text) {
     QString trim = new_text.trimmed();
     filter_preset(trim);
 }
+
+void MainWindow::on_tab3_table_presets_doubleClicked(const QModelIndex& index) {
+    int current_index = index.row();
+    load_preset(current_index);
+}
