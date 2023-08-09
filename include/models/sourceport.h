@@ -108,6 +108,7 @@ protected:
     int m_id;
     QString m_name;
     QFileInfo m_file;
+    QString m_params;
     SourcePortType m_type;
 
     /**
