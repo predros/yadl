@@ -44,8 +44,8 @@ void MainWindow::launch(QString port_path, SourcePortType port_type, QString iwa
                         int skill, int complevel,
                         QString map, QList<QString> mods, QString params, bool fast, bool coop) const {
 
-    static QFileInfo file_checker(port_path);
-    static QProcess run_process;
+    QFileInfo file_checker(port_path);
+    QProcess run_process;
     QStringList args_list;
 
     if (!file_checker.exists()) {
