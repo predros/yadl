@@ -1,4 +1,4 @@
-#include "sourceport_controller.h"
+#include "controllers/sourceport_controller.h"
 #include <QFont>
 
 SourcePortController::SourcePortController(QObject *parent)
@@ -35,7 +35,7 @@ QVariant SourcePortController::data(const QModelIndex& index, int role) const {
 }
 
 QVariant SourcePortController::headerData(int section, Qt::Orientation orientation,
-                                     int role) const {
+        int role) const {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section) {
             case 0:
@@ -134,7 +134,7 @@ void SourcePortController::populate(const QJsonArray& array) {
 }
 
 void SourcePortController::add(const QString& name, const QString& path,
-                          const QString& params) {
+                               const QString& params) {
     beginResetModel();
     int id = next_id();
     SourcePort sp(id, name, path, params);
@@ -143,7 +143,7 @@ void SourcePortController::add(const QString& name, const QString& path,
 }
 
 void SourcePortController::edit(int index, const QString& name, const QString& path,
-                           const QString& params) {
+                                const QString& params) {
     if (index < 0 || index > m_data.size() - 1) return;
 
     beginResetModel();

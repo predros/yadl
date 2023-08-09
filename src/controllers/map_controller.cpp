@@ -1,4 +1,4 @@
-#include "map_controller.h"
+#include "controllers/map_controller.h"
 
 MapController::MapController(const IWADController& iwad, const ModFileController& modfile,
                              QObject *parent)

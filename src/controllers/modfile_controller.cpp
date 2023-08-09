@@ -1,4 +1,4 @@
-#include "modfile_controller.h"
+#include "controllers/modfile_controller.h"
 #include <QJsonArray>
 #include <QJsonObject>
 

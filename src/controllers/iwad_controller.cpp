@@ -1,4 +1,4 @@
-#include "iwad_controller.h"
+#include "controllers/iwad_controller.h"
 
 IWADController::IWADController(QObject *parent)
     : QAbstractTableModel{parent} {
@@ -33,7 +33,7 @@ QVariant IWADController::data(const QModelIndex& index, int role) const {
 }
 
 QVariant IWADController::headerData(int section, Qt::Orientation orientation,
-                               int role) const {
+                                    int role) const {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section) {
             case 0:
@@ -137,7 +137,7 @@ void IWADController::populate(const QJsonArray& array) {
 }
 
 void IWADController::add(const QString& name, const QString& path,
-                    const QString& params) {
+                         const QString& params) {
     beginResetModel();
     int id = next_id();
     IWAD iwad(id, name, path, params);
@@ -146,7 +146,7 @@ void IWADController::add(const QString& name, const QString& path,
 }
 
 void IWADController::edit(int index, const QString& name, const QString& path,
-                     const QString& params) {
+                          const QString& params) {
     if (index < 0 || index > m_data.size() - 1) return;
 
     beginResetModel();

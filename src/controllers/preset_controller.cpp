@@ -1,6 +1,6 @@
-#include "preset_controller.h"
-#include "sourceport_controller.h"
-#include "iwad_controller.h"
+#include "controllers/preset_controller.h"
+#include "controllers/sourceport_controller.h"
+#include "controllers/iwad_controller.h"
 #include <QJsonArray>
 
 PresetController::PresetController(SourcePortController& sp, IWADController& iwad,
