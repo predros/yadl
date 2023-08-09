@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>icons/icon_add.xpm</file>
+        <file>icons/icon_delete.xpm</file>
+        <file>icons/icon_down.xpm</file>
+        <file>icons/icon_edit.xpm</file>
+        <file>icons/icon_play.xpm</file>
+        <file>icons/icon_up.xpm</file>
+        <file>icons/icon_folder.xpm</file>
+    </qresource>
+</RCC>
