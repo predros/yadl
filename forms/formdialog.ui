@@ -38,8 +38,14 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="folder-open">
-         <normaloff>.</normaloff>.</iconset>
+        <iconset resource="../assets/assets.qrc">
+         <normaloff>:/icons/icons/icon_folder.xpm</normaloff>:/icons/icons/icon_folder.xpm</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>16</width>
+         <height>16</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -77,7 +83,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../assets/assets.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttons_dialog</sender>

@@ -206,8 +206,8 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset theme="list-add">
-                <normaloff>.</normaloff>.</iconset>
+               <iconset resource="../assets/assets.qrc">
+                <normaloff>:/icons/icons/icon_add.xpm</normaloff>:/icons/icons/icon_add.xpm</iconset>
               </property>
              </widget>
             </item>
@@ -220,8 +220,8 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset theme="go-up">
-                <normaloff>.</normaloff>.</iconset>
+               <iconset resource="../assets/assets.qrc">
+                <normaloff>:/icons/icons/icon_up.xpm</normaloff>:/icons/icons/icon_up.xpm</iconset>
               </property>
              </widget>
             </item>
@@ -234,8 +234,8 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset theme="go-down">
-                <normaloff>.</normaloff>.</iconset>
+               <iconset resource="../assets/assets.qrc">
+                <normaloff>:/icons/icons/icon_down.xpm</normaloff>:/icons/icons/icon_down.xpm</iconset>
               </property>
              </widget>
             </item>
@@ -248,8 +248,8 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset theme="list-remove">
-                <normaloff>.</normaloff>.</iconset>
+               <iconset resource="../assets/assets.qrc">
+                <normaloff>:/icons/icons/icon_delete.xpm</normaloff>:/icons/icons/icon_delete.xpm</iconset>
               </property>
              </widget>
             </item>
@@ -302,8 +302,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="list-remove">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset resource="../assets/assets.qrc">
+              <normaloff>:/icons/icons/icon_delete.xpm</normaloff>:/icons/icons/icon_delete.xpm</iconset>
             </property>
            </widget>
           </item>
@@ -316,8 +316,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="list-add">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset resource="../assets/assets.qrc">
+              <normaloff>:/icons/icons/icon_add.xpm</normaloff>:/icons/icons/icon_add.xpm</iconset>
             </property>
            </widget>
           </item>
@@ -330,8 +330,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="go-up">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset resource="../assets/assets.qrc">
+              <normaloff>:/icons/icons/icon_up.xpm</normaloff>:/icons/icons/icon_up.xpm</iconset>
             </property>
            </widget>
           </item>
@@ -344,8 +344,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="go-down">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset resource="../assets/assets.qrc">
+              <normaloff>:/icons/icons/icon_down.xpm</normaloff>:/icons/icons/icon_down.xpm</iconset>
             </property>
            </widget>
           </item>
@@ -358,8 +358,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="input-tablet">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset resource="../assets/assets.qrc">
+              <normaloff>:/icons/icons/icon_edit.xpm</normaloff>:/icons/icons/icon_edit.xpm</iconset>
             </property>
            </widget>
           </item>
@@ -417,8 +417,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="go-up">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset resource="../assets/assets.qrc">
+              <normaloff>:/icons/icons/icon_up.xpm</normaloff>:/icons/icons/icon_up.xpm</iconset>
             </property>
            </widget>
           </item>
@@ -431,8 +431,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="list-add">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset resource="../assets/assets.qrc">
+              <normaloff>:/icons/icons/icon_add.xpm</normaloff>:/icons/icons/icon_add.xpm</iconset>
             </property>
            </widget>
           </item>
@@ -445,8 +445,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="list-remove">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset resource="../assets/assets.qrc">
+              <normaloff>:/icons/icons/icon_delete.xpm</normaloff>:/icons/icons/icon_delete.xpm</iconset>
             </property>
            </widget>
           </item>
@@ -459,8 +459,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="go-down">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset resource="../assets/assets.qrc">
+              <normaloff>:/icons/icons/icon_down.xpm</normaloff>:/icons/icons/icon_down.xpm</iconset>
             </property>
            </widget>
           </item>
@@ -473,8 +473,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="input-tablet">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset resource="../assets/assets.qrc">
+              <normaloff>:/icons/icons/icon_edit.xpm</normaloff>:/icons/icons/icon_edit.xpm</iconset>
             </property>
            </widget>
           </item>
@@ -531,13 +531,13 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="media-playback-start">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset resource="../assets/assets.qrc">
+              <normaloff>:/icons/icons/icon_play.xpm</normaloff>:/icons/icons/icon_play.xpm</iconset>
             </property>
             <property name="iconSize">
              <size>
-              <width>20</width>
-              <height>16</height>
+              <width>24</width>
+              <height>24</height>
              </size>
             </property>
            </widget>
@@ -551,8 +551,14 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="go-down">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset resource="../assets/assets.qrc">
+              <normaloff>:/icons/icons/icon_down.xpm</normaloff>:/icons/icons/icon_down.xpm</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -565,8 +571,14 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="go-up">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset resource="../assets/assets.qrc">
+              <normaloff>:/icons/icons/icon_up.xpm</normaloff>:/icons/icons/icon_up.xpm</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -579,8 +591,14 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="list-remove">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset resource="../assets/assets.qrc">
+              <normaloff>:/icons/icons/icon_delete.xpm</normaloff>:/icons/icons/icon_delete.xpm</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -633,6 +651,8 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../assets/assets.qrc"/>
+ </resources>
  <connections/>
 </ui>
