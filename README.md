@@ -29,7 +29,8 @@ This project requires [Qt6](https://www.qt.io/) and qmake, and has been tested w
 
 ```
 $ cd <repo-folder>
-$ qmake
+$ mkdir build && cd build
+$ qmake -makefile ../yadl.pro
 $ make
 ```
 
