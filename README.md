@@ -5,7 +5,7 @@
 ## Features
 * Allows to easily switch between sourceports, IWADs, and mods (PWADs and PK3s).
 * Automatically supports launching Windows sourceports on Linux (requires [Wine](https://www.winehq.org/)).
-* Settings for skill level, compatibility level (if appliable), fast and co-op exclusive monsters.
+* Settings for skill level, compatibility level (if applicable), fast and co-op exclusive monsters.
 * Warp directly to any level available.
 * Automatically saves the last settings when closing.
 * Stores info and custom command-line parameters for each sourceport and IWAD.
