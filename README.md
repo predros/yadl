@@ -25,7 +25,7 @@ YADL also allows the user to save the current combination of IWAD, sourceport, s
 Coming soon.
 
 ### Compiling from source
-This project requires [Qt6](https://www.qt.io/) and qmake, and has been tested with Qt 6.5.1. In order to compile it, clone the repository, open the command-line, and input:
+This project requires [Qt6](https://www.qt.io/) and qmake, and has been tested with Qt 6.2.0 LTS and newer. In order to compile it, clone the repository, open the command-line, and input:
 
 ```
 $ cd <repo-folder>
