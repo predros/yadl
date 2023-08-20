@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>YADL v0.1</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../assets/assets.qrc">
+    <normaloff>:/icons/yadl.ico</normaloff>:/icons/yadl.ico</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
