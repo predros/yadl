@@ -59,3 +59,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     assets/assets.qrc
+
+RC_ICONS = assets/yadl.ico

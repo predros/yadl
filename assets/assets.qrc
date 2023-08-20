@@ -7,5 +7,6 @@
         <file>icons/icon_play.xpm</file>
         <file>icons/icon_up.xpm</file>
         <file>icons/icon_folder.xpm</file>
+        <file>yadl.ico</file>
     </qresource>
 </RCC>
