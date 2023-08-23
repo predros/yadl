@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>YADL v0.1</string>
+   <string>YADL v1.0</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../assets/assets.qrc">
