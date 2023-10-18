@@ -128,7 +128,8 @@ void MainWindow::launch(QString port_path, SourcePortType port_type, QString iwa
 
             if (doom.match(map).hasMatch()) {
                 args_list.append("-warp");
-                args_list.append(map[1] + QString(" ") + map[3]);
+                args_list.append(map[1]);
+                args_list.append(map[3]);
             } else if (doom2.match(map).hasMatch()) {
                 args_list.append("-warp");
                 args_list.append(QString(map[3]) + QString(map[4]));
