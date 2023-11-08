@@ -15,11 +15,23 @@
 ### Sourceports and IWADs
 The Ports/IWADs tab allows you to specify the location, name and additional command-line parameters for each sourceport and IWAD you wish to use, and automatically persists the data. Note that the launcher does not manage the files, but rather saves their path: if a sourceport or IWAD is inaccessible, it will trigger an error message when attempting to launch.
 
+<p align="center">
+    <img src="https://i.imgur.com/1lWpezD.png" alt="Sourceports and IWADs tab">
+</p>
+
 ### Launching the game
 Once you have your sourceports and IWADs set up, the Launcher tab allows you to choose which ones to launch, along with any mod files (PWAD and PK3, currently), and game settings such as skill level, compatibility level (for PrBoom compatible ports), fast-monsters, and any additional command-line parameters. It also allows the user to warp directly to any maps available in the loaded mods (currently only for PWADs). If no maps are found in the mod files, the map selection defaults to the IWAD's map list.
 
+<p align="center">
+    <img src="https://i.imgur.com/C5QzslQ.png" alt="Launcher tab">
+</p>
+
 ### Saving presets
 YADL also allows the user to save the current combination of IWAD, sourceport, settings and mods as a preset, under a given name. These presets are available in the Presets tab, and can easily be loaded back into the launcher. If your list of presets is large enough, you can also filter them using the search box at the bottom of the tab. Note that if you save a new preset with an already existing name, it will be overwritten.
+
+<p align="center">
+    <img src="https://i.imgur.com/lVv7UFZ.png" alt="Presets tab">
+</p>
 
 ## Installation
 ### Pre-compiled binaries
