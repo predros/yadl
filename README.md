@@ -43,7 +43,7 @@ This project requires [Qt6](https://www.qt.io/) and qmake, and has been tested w
 ```
 $ cd <repo-folder>
 $ mkdir build && cd build
-$ qmake -makefile ../yadl.pro
+$ qmake6 -makefile ../yadl.pro
 $ make
 ```
 
